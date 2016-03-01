@@ -911,5 +911,69 @@ module HelpScout
         false
       end
     end
+
+    # List Ratings
+    # REST Method: GET
+    # URLs: https://api.helpscout.net/v1/reports/happiness/ratings.json
+    # The happiness ratings report provides a company's ratings for over a specified time range.
+    #
+    # URL Parameters
+    # A variety of filters are available as query parameters. Including any of these will result in only conversations that match the filters being included in the report.
+    #
+    # Parameter	Type	Required	Notes	Example
+    # start	Date/Time	Yes	ISO 8601, in UTC	2015-01-01T00:00:00Z
+    # end	Date/Time	Yes	ISO 8601, in UTC	2015-01-31T23:59:59Z
+    # mailboxes	list of mailbox identifiers	No	 	1,2,3
+    # tags	list of tag identifiers	No	 	1,2,3
+    # types	list of conversation types	No	Valid values are:
+    # email
+    # chat
+    # phone
+    # email,chat
+    # folders	list of folder identifiers	No	 	1,2,3
+    # page	Int	No	The page number	1
+    # rating	Int	Yes	Which set of ratings to display; valid values are:
+    # 0 (for all ratings)
+    # 1 (for Great ratings)
+    # 2 (for Okay ratings)
+    # 3 (for Not Good ratings)
+    # 1
+    # sortField	String	No	Field which to sort results by; valid values are:
+    # number
+    # modifiedAt
+    # rating
+    # rating
+    # sortOrder	String	No	Valid values are:
+    # ASC
+    # DESC
+    # ASC
+
+    def ratings(start_time, end_time, rating)
+      url = "/reports/happiness/ratings.json"
+
+      page = 1
+      options = {}
+
+      options["start"] = start_time
+      options["end"] = end_time
+      options["rating"] = rating
+
+
+      ratings = []
+
+      begin
+        options["page"] = page
+        items = Client.request_items(@auth, url, options)
+        items.each do |item|
+          ratings << Rating.new(item)
+        end
+        page = page + 1
+      rescue StandardError => e
+        puts "Request failed: #{e.message}"
+      end while items && items.count > 0
+
+      ratings
+    end
+
   end
 end
