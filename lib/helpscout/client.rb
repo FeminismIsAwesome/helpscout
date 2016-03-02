@@ -574,7 +574,7 @@ module HelpScout
       end
 
       if modifiedSince
-        options["modifiedSince"] = modifiedSince
+        options["modifiedSince"] = format_time modifiedSince
       end
 
       conversations = []
@@ -656,7 +656,7 @@ module HelpScout
       end
 
       if modifiedSince
-        options["modifiedSince"] = modifiedSince
+        options["modifiedSince"] = format_time modifiedSince
       end
 
       conversations = []
@@ -911,8 +911,8 @@ module HelpScout
       page = 1
       options = {}
 
-      options["start"] = start_time
-      options["end"] = end_time
+      options["start"] = format_time start_time
+      options["end"] = format_time end_time
       options["rating"] = rating
 
 
@@ -930,6 +930,12 @@ module HelpScout
       end while items && items.count > 0
 
       ratings
+    end
+
+    private
+
+    def format_time(time)
+      time.respond_to?(:strftime) ? time.strftime('%Y-%m-%dT%H:%M:00Z') : time
     end
   end
 end

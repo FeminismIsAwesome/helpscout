@@ -55,8 +55,8 @@ describe "Ratings" do
   }
 
   it "should get list of items from helpscout pages" do
-    expect(HelpScout::Client).to receive(:request_items).with({:username=>"JUNKAPIKEY", :password=>"X"}, "/reports/happiness/ratings.json", {"start"=>"2016-02-25T00:00:00Z", "end"=>"2016-02-29T00:00:00Z", "rating"=>0, "page"=> anything }).and_return(json1, json2, empty_json)
-    ratings = helpscout.ratings('2016-02-25T00:00:00Z', '2016-02-29T00:00:00Z', 0)
+    expect(HelpScout::Client).to receive(:request_items).with({:username=>"JUNKAPIKEY", :password=>"X"}, "/reports/happiness/ratings.json", {"start"=>"2012-01-01T00:00:00Z", "end"=>"2013-02-02T09:10:00Z", "rating"=>0, "page"=> anything }).and_return(json1, json2, empty_json)
+    ratings = helpscout.ratings(Time.new(2012,1,1), Time.new(2013,2,2, 9,10), 0)
 
     expect(ratings.count).to eq(2)
     expect(ratings.first.rating).to eq("Okay")
