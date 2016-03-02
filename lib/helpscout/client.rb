@@ -905,7 +905,7 @@ module HelpScout
       end
     end
 
-    def ratings(start_time, end_time, rating)
+    def ratings(start_time, end_time, rating=0)
       url = "/reports/happiness/ratings.json"
 
       page = 1
