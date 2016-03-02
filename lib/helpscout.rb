@@ -1,5 +1,4 @@
-require 'helpscout/client.rb'
-require 'helpscout/models.rb'
+Dir[File.dirname(__FILE__) + '/helpscout/*.rb'].each {|file| require file }
 
 module HelpScout
 
