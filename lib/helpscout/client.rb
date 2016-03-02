@@ -905,6 +905,7 @@ module HelpScout
       end
     end
 
+    #will need to handle exceptions if we want to deal with case where some ratings are returned before an error barfs.
     def ratings(start_time, end_time, rating=0)
       url = "/reports/happiness/ratings.json"
 
@@ -927,6 +928,7 @@ module HelpScout
         page = page + 1
       rescue StandardError => e
         puts "Request failed: #{e.message}"
+        raise e
       end while items && items.count > 0
 
       ratings
