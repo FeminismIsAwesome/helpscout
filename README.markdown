@@ -37,4 +37,12 @@ To fetch active conversations:
 ```ruby
 conversations = helpscout.conversations(mailboxId, "active", nil)
 ```
+### Fetching Ratings
 
+#### Fetching Conversations
+
+To fetch ratings:
+
+```ruby
+conversations = helpscout.ratings(1.days.ago, Time.new)
+```
